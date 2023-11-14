@@ -1,0 +1,21 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    openshift.io/display-name: mnist-8
+    serving.kserve.io/deploymentMode: ModelMesh
+  name: mnist-8
+  namespace: alampare-dev
+  labels:
+    name: mnist-8
+    opendatahub.io/dashboard: 'true'
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: {{ .ModelArtifact.ModelFormatName }}
+        version: {{ .ModelArtifact.ModelFormatVersion }}
+      runtime: {{ .Runtime }}
+      storage:
+        key: {{ .ModelArtifact.StorageKey }}
+        path: {{ .ModelArtifact.StoragePath }}
